@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3.1.3
+        uses: actions/checkout@v4
 
       - name: Setup Go
         uses: actions/setup-go@v4
@@ -29,13 +29,13 @@ jobs:
           GOOS=windows GOARCH=amd64 go build -o strava-fetcher.exe ./scripts/fetch_strava_data.go
 
       - name: Upload Linux binary
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v4
         with:
           name: strava-fetcher-linux
           path: strava-fetcher
 
       - name: Upload Windows binary
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v4
         with:
           name: strava-fetcher-windows.exe
           path: strava-fetcher.exe
