@@ -10,12 +10,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: golang:1.21
 
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v3.6.0  # 明示的にバージョン指定
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
 
       - name: Build for Linux (amd64)
         run: |
@@ -26,13 +29,13 @@ jobs:
           GOOS=windows GOARCH=amd64 go build -o strava-fetcher.exe ./scripts/fetch_strava_data.go
 
       - name: Upload Linux binary
-        uses: actions/upload-artifact@v3.1.3  # 明示的にバージョン指定
+        uses: actions/upload-artifact@v3
         with:
           name: strava-fetcher-linux
           path: strava-fetcher
 
       - name: Upload Windows binary
-        uses: actions/upload-artifact@v3.1.3  # 同じく明示
+        uses: actions/upload-artifact@v3
         with:
           name: strava-fetcher-windows.exe
           path: strava-fetcher.exe
