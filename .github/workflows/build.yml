@@ -1,0 +1,38 @@
+name: Build strava-fetcher Binaries
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.21
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Build for Linux (amd64)
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o strava-fetcher ./scripts/fetch_strava_data.go
+
+      - name: Build for Windows (amd64)
+        run: |
+          GOOS=windows GOARCH=amd64 go build -o strava-fetcher.exe ./scripts/fetch_strava_data.go
+
+      - name: Upload Linux binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: strava-fetcher-linux
+          path: strava-fetcher
+
+      - name: Upload Windows binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: strava-fetcher-windows.exe
+          path: strava-fetcher.exe
