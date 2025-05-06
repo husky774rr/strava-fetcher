@@ -22,7 +22,7 @@ jobs:
 
       - name: Build for Linux (amd64)
         run: |
-          GOOS=linux GOARCH=amd64 go build -o strava-fetcher ./scripts/fetch_strava_data.go
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o strava-fetcher ./scripts/fetch_strava_data.go
 
       - name: Build for Windows (amd64)
         run: |
